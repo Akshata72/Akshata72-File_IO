@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using CsvHelper;
+using System.Globalization;
+using CsvHelper.Configuration;
 
 namespace IOStream
 {
@@ -33,6 +36,58 @@ namespace IOStream
             lines.Add(line);
             File.WriteAllLines(path, lines);
         }
+        public static void ReadCsvFile()
+        {
+            string path = @"D:\Ak\programs\Akshata72-File_IO\IO File\File\AddressBook.csv";
+            using (var reader = new StreamReader(path))
+            {
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var records = csv.GetRecords<Person>().ToList();
+                    Console.WriteLine("Read Data successfully from address csv.");
+                    foreach (Person record in records)
+                    {
+                        Console.Write("" + record.firstname);
+                        Console.Write("|" + record.lastname);
+                        Console.Write("|" + record.address);
+                        Console.Write("|" + record.city);
+                        Console.Write("|" + record.state);
+                        Console.Write("|" + record.zip);
+                        Console.Write("|" + record.phonenumber);
+                        Console.Write("|" + record.email + "\n");
+                    }
+                }
+            }
+        }
+        public static void WriteCsvFile()
+        {
+            string exportpath = @"D:\Ak\programs\Akshata72-File_IO\IO File\File\Address.csv";
+            string path = @"D:\Ak\programs\Akshata72-File_IO\IO File\File\AddressBook.csv";
+            using (var reader = new StreamReader(path))
+            {
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    var records = csv.GetRecords<Person>().ToList();
+                    Console.WriteLine("Read Data successfully from address csv.");
+                    foreach (Person record in records)
+                    {
+                        Console.Write("" + record.firstname);
+                        Console.Write("|" + record.lastname);
+                        Console.Write("|" + record.address);
+                        Console.Write("|" + record.city);
+                        Console.Write("|" + record.state);
+                        Console.Write("|" + record.zip);
+                        Console.Write("|" + record.phonenumber);
+                        Console.Write("|" + record.email + "\n");
+                    }
+                    using (var writer = new StreamWriter(exportpath))
+                    using (var csvExport = new CsvWriter(writer, CultureInfo.InvariantCulture))
+                    {
+                        csvExport.WriteRecords(records);
+                    }
+                }
+            }
+        }
         static void Main(string[] args)
         {
             FileIO file = new FileIO();
@@ -42,6 +97,8 @@ namespace IOStream
             {
                 Console.WriteLine("\nEnter 1 for ReadFile");
                 Console.WriteLine("Enter 2 for Write Text in file");
+                Console.WriteLine("Enter 3 For Csv reader");
+                Console.WriteLine("Enter 4 for Csv writer");
                 Console.WriteLine("Enter 0 For Exist");
                 try
                 {
@@ -53,6 +110,12 @@ namespace IOStream
                             break;
                         case 2:
                             file.WriteLine();
+                            break;
+                        case 3:
+                            ReadCsvFile();
+                            break;
+                        case 4:
+                            WriteCsvFile();
                             break;
                     }
                 }
