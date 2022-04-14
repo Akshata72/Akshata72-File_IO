@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using CsvHelper;
 using System.Globalization;
-using CsvHelper.Configuration;
+using Newtonsoft.Json;
 
 namespace IOStream
 {
@@ -88,6 +88,48 @@ namespace IOStream
                 }
             }
         }
+        public void JSONFileSerialization()
+        {
+            var person = new List<Person>
+            {
+                new Person
+                {
+                    firstname = "Akshata",
+                    lastname = "Sabale",
+                    city = "Latur",
+                    address = "Latur",
+                    state = "Maharastra",
+                    zip = 4562245,
+                    phonenumber = "477856521",
+                    email = "sable@gmail.com"
+                },
+                new Person
+                {
+                    firstname = "Ashwini",
+                    lastname = "Padkunde",
+                    city = "Ambejogai",
+                    address = "Ambejogai",
+                    state = "Maharastra",
+                    zip = 431517,
+                    phonenumber = "7821488474",
+                    email = "ashwini@gmail.com"
+                }
+            };
+            string path = @"D:\Ak\programs\Akshata72-File_IO\IO File\File\AddressBook.json";
+            string serialization = JsonConvert.SerializeObject(person);
+            using (StreamWriter sw = File.CreateText(path))
+            {
+                sw.Flush();
+                sw.Write(serialization);
+                Console.WriteLine(serialization);
+            }
+        }
+        public void Deserialization()
+        {
+            string path = @"D:\Ak\programs\Akshata72-File_IO\IO File\File\AddressBook.json";
+            string result = File.ReadAllText(path);
+             List<Person> person= JsonConvert.DeserializeObject<List<Person>>(result);
+        }
         static void Main(string[] args)
         {
             FileIO file = new FileIO();
@@ -99,6 +141,8 @@ namespace IOStream
                 Console.WriteLine("Enter 2 for Write Text in file");
                 Console.WriteLine("Enter 3 For Csv reader");
                 Console.WriteLine("Enter 4 for Csv writer");
+                Console.WriteLine("Enter 5 for Json");
+                Console.WriteLine("Enter 6 for DeJson");
                 Console.WriteLine("Enter 0 For Exist");
                 try
                 {
@@ -116,6 +160,15 @@ namespace IOStream
                             break;
                         case 4:
                             WriteCsvFile();
+                            break;
+                        case 5:
+                            file.JSONFileSerialization();
+                            break;
+                        case 6:
+                            file.Deserialization();
+                            break;
+                        default:
+                            Console.WriteLine("Invalid Input...");
                             break;
                     }
                 }

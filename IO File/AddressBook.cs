@@ -14,9 +14,13 @@ namespace IOStream
         public string address { get; set; }
         public string city { get; set; }
         public string state { get; set; }
-        public string zip { get; set; }
+        public int zip { get; set; }
         public string phonenumber { get; set; }
         public string email { get; set; }
+        //new List<Person>(){
+        //    new Person() { firstname = "akshata",}
+
+       
     }
 }
     
