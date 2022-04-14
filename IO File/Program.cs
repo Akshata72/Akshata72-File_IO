@@ -128,7 +128,8 @@ namespace IOStream
         {
             string path = @"D:\Ak\programs\Akshata72-File_IO\IO File\File\AddressBook.json";
             string result = File.ReadAllText(path);
-             List<Person> person= JsonConvert.DeserializeObject<List<Person>>(result);
+             List<Person> person= JsonConvert.DeserializeObject<List<Person>>(result);           
+                Console.WriteLine(result);
         }
         static void Main(string[] args)
         {
@@ -141,8 +142,8 @@ namespace IOStream
                 Console.WriteLine("Enter 2 for Write Text in file");
                 Console.WriteLine("Enter 3 For Csv reader");
                 Console.WriteLine("Enter 4 for Csv writer");
-                Console.WriteLine("Enter 5 for Json");
-                Console.WriteLine("Enter 6 for DeJson");
+                Console.WriteLine("Enter 5 for Serialization of Json");
+                Console.WriteLine("Enter 6 for Deserialization of Json");
                 Console.WriteLine("Enter 0 For Exist");
                 try
                 {
